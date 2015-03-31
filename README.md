@@ -1,2 +1,2 @@
 # robotcode
-For the programmers of LanceBotics team 200A
+For the programmers of LanceBotics team 200A.
