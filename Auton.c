@@ -159,7 +159,7 @@ void armControl(clawPos pos) {
 		SensorValue[cubeIntake] = pos;
 }
 
-void rotate(moveDir Dir){
+void rotate(int power, moveDir Dir){
 	switch(Dir){
 		case LEFT:
 		motor[frontRight] = -fullPower*power;
