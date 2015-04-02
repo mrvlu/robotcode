@@ -177,6 +177,13 @@ void rotate(int power, moveDir Dir){
 	}
 }
 
+void encoderDrive(int x){
+		nMotorEncoder[frontRight] = x;
+    		nMotorEncoder[backRight] = x;
+    		nMotorEncoder[backLeft] = x;
+	    	nMotorEncoder[frontLeft] = x;
+	    }
+
 task main()
 {
 
