@@ -177,7 +177,7 @@ void rotate(int power, moveDir Dir){
 	}
 }
 
-void encoderDrive(int x){
+void encoderDrive(int x){				//once encoders are placed on the arm, must create function for arm
 		nMotorEncoder[frontRight] = x;
     		nMotorEncoder[backRight] = x;
     		nMotorEncoder[backLeft] = x;
