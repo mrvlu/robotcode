@@ -43,13 +43,13 @@ typedef enum {
 } clawPos;
 
 typedef enum {
-	CLOSED,
-	OPEN
+CLOSED,
+OPEN
 } skyClaw;
 
 typedef enum{
-	CLOSED,
-	OPEN
+CLOSED,
+OPEN
 }skyArm;
 
 void drive(int power, moveDir dir){
@@ -86,8 +86,8 @@ void arm(int power, armDir dir){
     case UP:
       motor[botRight] = fullPower * power;
 	  	motor[botLeft] = fullPower * power;
-		  motor[midRight] = fullPower * power;
-		  motor[midLeft] = fullPower * power;
+		motor[midRight] = fullPower * power;
+		motor[midLeft] = fullPower * power;
 	  	motor[topRight] = fullPower * power;
 	  	motor[topLeft] = fullPower * power;
     break;
@@ -102,18 +102,8 @@ void arm(int power, armDir dir){
   }
 }
 
-
-void stopArm(){
-  motor[botRight] = 0;
-	motor[botLeft] = 0;
-	motor[midRight] = 0;
-	motor[midLeft] = 0;
-	motor[topRight] = 0;
-	motor[topLeft] = 0;
-}
-
 void armControl(clawPos pos) {
-		SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
+SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
 }
 
 void skyriseClawControl(skyClaw pos){
@@ -125,27 +115,27 @@ void skyriseArmControl(skyArm pos){
 
 void rotate(int power, moveDir dir){ 
 	switch(dir){
-		case LEFT:
-		  motor[frontRight] = fullPower;
+	case LEFT:
+	motor[frontRight] = fullPower;
     	motor[backRight] = fullPower;
     	motor[backLeft] = -fullPower;
-	    motor[frontLeft] = -fullPower;
+	motor[frontLeft] = -fullPower;
 	    break;
-	  case RIGHT:
-	   motor[frontRight] = -fullPower;
+	case RIGHT:
+	motor[frontRight] = -fullPower;
     	motor[backRight] = -fullPower;
     	motor[backLeft] = fullPower;
-	    motor[frontLeft] = fullPower;
+	motor[frontLeft] = fullPower;
 	    break;
 	}
 
 }
 
 void encoderDrive(int x){
-				nMotorEncoder[frontRight] = x;
-    		nMotorEncoder[backRight] = x;
-    		nMotorEncoder[backLeft] = x;
-	    	nMotorEncoder[frontLeft] = x;
+nMotorEncoder[frontRight] = x;
+nMotorEncoder[backRight] = x;
+nMotorEncoder[backLeft] = x;
+nMotorEncoder[frontLeft] = x;
 	    }
 void encoderArm(){
 	//2 arm encoders
