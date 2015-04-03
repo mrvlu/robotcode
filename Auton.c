@@ -126,11 +126,11 @@ void rotate(int power, moveDir dir){
 }
 
 void encoderDrive(int x){
-nMotorEncoder[frontRight] = x;
-nMotorEncoder[backRight] = x;
-nMotorEncoder[backLeft] = x;
-nMotorEncoder[frontLeft] = x;
-	    }
+	nMotorEncoder[frontRight] = x;
+	nMotorEncoder[backRight] = x;
+	nMotorEncoder[backLeft] = x;
+	nMotorEncoder[frontLeft] = x;
+	}
 void encoderArm(){
 	//2 arm encoders
 }
