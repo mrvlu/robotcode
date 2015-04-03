@@ -37,20 +37,26 @@ typedef enum {
   DOWN
 } armDir;
 
-typedef enum {
+typedef enum {	//USED FOR BOTH SKYRISE AND CUBE INTAKE
   CLOSED,
   OPEN
 } clawPos;
 
-typedef enum {
-CLOSED,
-OPEN
-} skyClaw;
-
 typedef enum{
-CLOSED,
-OPEN
+PICKUP,
+DROPOFF
 }skyArm;
+
+void armControl(clawPos pos) {
+SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
+}
+
+void skyriseClawControl(clawPos pos){	
+	SensorValue[skyriseClaw] = pos;
+}
+void skyriseArmControl(skyArm pos){	//PICKUP OR DROPOFF
+	SensorValue[skyriseArm] = pos;
+}
 
 void drive(int power, moveDir dir){
   switch(dir){
@@ -101,18 +107,6 @@ void arm(int power, armDir dir){
     break;
   }
 }
-
-void armControl(clawPos pos) {
-SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
-}
-
-void skyriseClawControl(skyClaw pos){
-	SensorValue[skyriseClaw] = pos;
-}
-void skyriseArmControl(skyArm pos){
-	SensorValue[skyriseArm] = pos;
-}
-
 void rotate(int power, moveDir dir){ 
 	switch(dir){
 	case LEFT:
