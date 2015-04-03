@@ -5,6 +5,8 @@
 #pragma config(Sensor, in2,    rightPot,       sensorPotentiometer)
 #pragma config(Sensor, in5,    autoSelect,     sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  cubeIntake,     sensorDigitalOut)
+#pragma config(Sensor, dgtl2,  skyriseClaw,    sensorDigitalOut)
+#pragma config(Sensor, dgtl3,  skyriseArm,     sensorDigitalOut)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
@@ -24,128 +26,83 @@
 const int fullPower = 127;
 
 typedef enum {
-  FORWARDS = 0,
-  RIGHT = 1,
-  BACKWARDS = 2,
-  LEFT = 3
+  FORWARDS,
+  RIGHT,
+  BACKWARDS,
+  LEFT
 } moveDir;
 
 typedef enum {
-  UP = 0,
-  DOWN = 1
+  UP,
+  DOWN
 } armDir;
 
 typedef enum {
-  CLOSED = 0,
-  OPEN = 1
+  CLOSED,
+  OPEN
 } clawPos;
+
+typedef enum {
+	CLOSED,
+	OPEN
+} skyClaw;
+
+typedef enum{
+	CLOSED,
+	OPEN
+}skyArm;
 
 void drive(int power, moveDir dir){
   switch(dir){
     case FORWARDS:
-      motor[frontRight] = fullPower*power;
-    	motor[backRight] = fullPower*power;
-    	motor[backLeft] = fullPower*power;
-	    motor[frontLeft] = fullPower*power;
+      motor[frontRight] = fullPower * power;
+    	motor[backRight] = fullPower * power;
+    	motor[backLeft] = fullPower * power;
+	    motor[frontLeft] = fullPower * power;
     break;
     case RIGHT:
-      motor[frontRight] = -fullPower*power;
-    	motor[backRight] = fullPower*power;
-    	motor[backLeft] = -fullPower*power;
-	    motor[frontLeft] = fullPower*power;
+      motor[frontRight] = -fullPower * power;
+    	motor[backRight] = fullPower * power;
+    	motor[backLeft] = -fullPower * power;
+	    motor[frontLeft] = fullPower * power;
     break;
     case BACKWARDS:
-      motor[frontRight] = -fullPower*power;
-    	motor[backRight] = -fullPower*power;
-    	motor[backLeft] = -fullPower*power;
-	    motor[frontLeft] = -fullPower*power;
+      motor[frontRight] =  fullPower * power;
+    	motor[backRight] = fullPower * power;
+    	motor[backLeft] = fullPower * power;
+	    motor[frontLeft] = fullPower * power;
     break;
     case LEFT:
-      motor[frontRight] = fullPower*power;
-    	motor[backRight] = -fullPower*power;
-    	motor[backLeft] = fullPower*power;
-	    motor[frontLeft] = -fullPower*power;
+      motor[frontRight] = fullPower * power;
+    	motor[backRight] = -fullPower * power;
+    	motor[backLeft] = fullPower * power;
+	    motor[frontLeft] = -fullPower * power;
     break;
   }
-}
-
-void drive(moveDir dir){
-  switch(dir){
-    case FORWARDS:
-      motor[frontRight] = fullPower;
-    	motor[backRight] = fullPower;
-    	motor[backLeft] = fullPower;
-	    motor[frontLeft] = fullPower;
-    break;
-    case RIGHT:
-      motor[frontRight] = -fullPower;
-    	motor[backRight] = fullPower;
-    	motor[backLeft] = -fullPower;
-	    motor[frontLeft] = fullPower;
-    break;
-    case BACKWARDS:
-      motor[frontRight] = -fullPower;
-    	motor[backRight] = -fullPower;
-    	motor[backLeft] = -fullPower;
-	    motor[frontLeft] = -fullPower;
-    break;
-    case LEFT:
-      motor[frontRight] = fullPower;
-    	motor[backRight] = -fullPower;
-    	motor[backLeft] = fullPower;
-	    motor[frontLeft] = -fullPower;
-    break;
-  }
-}
-
-void stopDrive(){
-  motor[frontRight] = 0;
- 	motor[backRight] = 0;
-	motor[backLeft] = 0;
-  motor[frontLeft] = 0;
 }
 
 void arm(int power, armDir dir){
   switch(dir){
     case UP:
-      motor[botRight] = fullPower*power;
-	  	motor[botLeft] = fullPower*power;
-		  motor[midRight] = fullPower*power;
-		  motor[midLeft] = fullPower*power;
-	  	motor[topRight] = fullPower*power;
-	  	motor[topLeft] = fullPower*power;
+      motor[botRight] = fullPower * power;
+	  	motor[botLeft] = fullPower * power;
+		  motor[midRight] = fullPower * power;
+		  motor[midLeft] = fullPower * power;
+	  	motor[topRight] = fullPower * power;
+	  	motor[topLeft] = fullPower * power;
     break;
     case DOWN:
-      motor[botRight] = -fullPower*power;
-	  	motor[botLeft] = -fullPower*power;
-	  	motor[midRight] = -fullPower*power;
-  		motor[midLeft] = -fullPower*power;
-  		motor[topRight] = -fullPower*power;
-  		motor[topLeft] = -fullPower*power;
+      motor[botRight] = -fullPower * power;
+	  	motor[botLeft] = -fullPower * power;
+	  	motor[midRight] = -fullPower * power;
+  		motor[midLeft] = -fullPower * power;
+  		motor[topRight] = -fullPower * power;
+  		motor[topLeft] = -fullPower * power;
     break;
   }
 }
 
-void arm(armDir dir){
-  switch(dir){
-    case UP:
-      motor[botRight] = fullPower;
-	  	motor[botLeft] = fullPower;
-		  motor[midRight] = fullPower;
-		  motor[midLeft] = fullPower;
-	  	motor[topRight] = fullPower;
-	  	motor[topLeft] = fullPower;
-    break;
-    case DOWN:
-      motor[botRight] = -fullPower;
-	  	motor[botLeft] = -fullPower;
-	  	motor[midRight] = -fullPower;
-  		motor[midLeft] = -fullPower;
-  		motor[topRight] = -fullPower;
-  		motor[topLeft] = -fullPower;
-    break;
-  }
-}
+
 void stopArm(){
   motor[botRight] = 0;
 	motor[botLeft] = 0;
@@ -156,43 +113,51 @@ void stopArm(){
 }
 
 void armControl(clawPos pos) {
-		SensorValue[cubeIntake] = pos;
+		SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
 }
 
-void rotate(int power, moveDir Dir){
-	switch(Dir){
+void skyriseClawControl(skyClaw pos){
+	SensorValue[skyriseClaw] = pos;
+}
+void skyriseArmControl(skyArm pos){
+	SensorValue[skyriseArm] = pos;
+}
+
+void rotate(int power, moveDir dir){ 
+	switch(dir){
 		case LEFT:
-		motor[frontRight] = -fullPower*power;
-    		motor[backRight] = fullPower*power;
-    		motor[backLeft] = -fullPower*power;
-	    	motor[frontLeft] = fullPower*power;
-	    	break;
-	    	case RIGHT:
-		motor[frontRight] = fullPower*power;
-    		motor[backRight] = -fullPower*power;
-    		motor[backLeft] =  fullPower*power;
-	    	motor[frontLeft] = -fullPower*power;
-	    	break;
-		
+		  motor[frontRight] = fullPower;
+    	motor[backRight] = fullPower;
+    	motor[backLeft] = -fullPower;
+	    motor[frontLeft] = -fullPower;
+	    break;
+	  case RIGHT:
+	   motor[frontRight] = -fullPower;
+    	motor[backRight] = -fullPower;
+    	motor[backLeft] = fullPower;
+	    motor[frontLeft] = fullPower;
+	    break;
 	}
+
 }
 
-void encoderDrive(int x){				
-		nMotorEncoder[frontRight] = x;
+void encoderDrive(int x){
+				nMotorEncoder[frontRight] = x;
     		nMotorEncoder[backRight] = x;
     		nMotorEncoder[backLeft] = x;
 	    	nMotorEncoder[frontLeft] = x;
 	    }
+void encoderArm(){
+	//2 arm encoders
+}
 
-void encoderArm(int x){				
-		//
-	    }	    
 
-task main()
-{
 
-	//Autonomous
-	while (true) {
 
-	}
+task main(){
+
+while(encoderDrive(0) < 500){
+drive(1,FORWARDS);
+}
+
 }
