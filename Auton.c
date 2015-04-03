@@ -50,10 +50,6 @@ DROPOFF
 void armControl(clawPos pos) {
 SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
 }
-
-void skyriseClawControl(clawPos pos){	
-	SensorValue[skyriseClaw] = pos;
-}
 void skyriseArmControl(skyArm pos){	//PICKUP OR DROPOFF
 	SensorValue[skyriseArm] = pos;
 }
