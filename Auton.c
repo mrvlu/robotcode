@@ -25,27 +25,27 @@
 
 const int fullPower = 127;
 
-typedef enum {
+enum moveDir {
   FORWARDS,
   RIGHT,
   BACKWARDS,
   LEFT
-} moveDir;
+};
 
-typedef enum {
+enum armDir {
   UP,
   DOWN
-} armDir;
+};
 
-typedef enum {	//USED FOR BOTH SKYRISE AND CUBE INTAKE
+enum clawPos {	//USED FOR BOTH SKYRISE AND CUBE INTAKE
   CLOSED,
   OPEN
-} clawPos;
+};
 
-typedef enum{
+enum skyArm{
 PICKUP,
 DROPOFF
-}skyArm;
+};
 
 void armControl(clawPos pos) {
 SensorValue[cubeIntake] = pos; //OPEN OR CLOSE
