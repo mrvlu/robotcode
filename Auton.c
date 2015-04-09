@@ -31,6 +31,7 @@ int mS = 1			//speed multiplyer
 int mIV = 0;		//maximum integral value
 int mEV = 100;		//max encoder value
 int lastTime = 0;	//last integral check
+
 enum moveDir {
 	FORWARDS,
 	RIGHT,
