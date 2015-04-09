@@ -185,7 +185,7 @@ void pidArm(armDir dir, int dist){
 					intrg += error * ((time1(T1) - lastTime) / mI);
 					if(error = 0)
 						intrg = 0;
-					if(|intrg| =< mIV)
+					if(abs(intrg) <= mIV)
 						intrg = mIV;
 					power = error*mS - intrg;
 					armRight(1);
@@ -195,7 +195,7 @@ void pidArm(armDir dir, int dist){
 					intrg += error * ((time1(T1) - lastTime) / mI);
 					if(error = 0)
 						intrg = 0;
-					if(|intrg| =< mIV)
+					if(abs(intrg) <= mIV)
 						intrg = mIV;
 					power = error*mS - intrg;
 					armLeft(1);
@@ -212,7 +212,7 @@ void pidArm(armDir dir, int dist){
 					intrg += error * ((time1(T1) - lastTime) / mI);
 					if(error = 0)
 						intrg = 0;
-					if(|intrg| =< mIV)
+					if(abs(intrg) <= mIV)
 						intrg = mIV;
 					power = error*mS - intrg;
 					armRight(-1);
@@ -222,7 +222,7 @@ void pidArm(armDir dir, int dist){
 					intrg += error * ((time1(T1) - lastTime) / mI);
 					if(error = 0)
 						intrg = 0;
-					if(|intrg| =< mIV)
+					if(abs(intrg) <= mIV)
 						intrg = mIV;
 					power = error*mS - intrg;
 					armLeft(-1);
@@ -235,6 +235,7 @@ void pidArm(armDir dir, int dist){
 		}
 	}
 }
+
 
 
 
