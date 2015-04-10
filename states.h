@@ -1,5 +1,5 @@
-#ifndef VARIABLESENUMS_H
-#define VARIABLESENUMS_H
+#ifndef STATES_H
+#define STATES_H
 
 enum moveDir {
 	FORWARDS,
