@@ -1,0 +1,33 @@
+#ifndef LCDDISPLAY_H
+#define LCDDISPLAY_H
+
+void lcdDisplay(){
+	while(true){
+		//LCD DISPLAY CODE
+		bLCDBacklight = true;
+		//clear top line
+		clearLCDLine(0);
+		//clear bottom line
+		clearLCDLine(1);
+		//set lcd positon to top right
+		displayLCDPos(0,0);
+		//print
+		displayNextLCDString("RIGHT: ");
+		//set to bottem left
+		displayLCDPos(1,0);
+		//print
+		displayNextLCDString("LEFT: ");
+		//displays potentiometer value
+		displayNextLCDNumber(abs(nMotorEncoder(backRight)));
+		//sets position
+		displayLCDPos(0,6);
+		//displays sensor value
+
+		displayNextLCDNumber(abs(nMotorEncoder(backLeft)));
+	}
+
+}
+
+
+
+#endif
