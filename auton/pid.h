@@ -10,14 +10,14 @@ int mIV = 0;		//maximum integral value
 int mEV = 100;		//max encoder value
 int lastTime = 0;	//last integral check
 
-void encArm(int x){
+void encArm(int x){														//you can set encoder values for the arm
 
 	nMotorEncoder[topLeft] = x;
 	nMotorEncoder[topRight] = x;
 
 }
 
-void armLeft(int power, armDir dir){
+void armLeft(int power, armDir dir){												
 	switch(dir){
 	case UP:
 		//Left
@@ -50,40 +50,60 @@ void armRight(int power, armDir dir){
 	}
 }
 
-void arm(int power, armDir dir, int changeEnc){
-encArm(0);
-while(abs(nMotorEncoder[topLeft]) < changeEnc && abs(nMotorEncoder[topRight]) < changeEnc){
+void stopArm(){
+			motor[botRight] = 0;
+			motor[botLeft] = 0;
+			motor[midRight] = 0;
+			motor[midLeft] = 0;
+			motor[topRight] = 0;
+			motor[topLeft] = 0;
+
+		
+	}
+	
+void arm(armDir dir, int changeEnc){
+
+
 		switch(dir){
 		case UP:
-			motor[botRight] = -fullPower * power;
-			motor[botLeft] = -fullPower * power;
-			motor[midRight] = -fullPower * power;
-			motor[midLeft] = -fullPower * power;
-			motor[topRight] = -fullPower * power;
-			motor[topLeft] = -fullPower * power;
+		while(nMotorEncoder[topLeft] < changeEnc && nMotorEncoder[topRight] < changeEnc){
+			motor[botRight] = -fullPower;
+			motor[botLeft] = -fullPower;
+			motor[midRight] = -fullPower;
+			motor[midLeft] = -fullPower;
+			motor[topRight] = -fullPower;
+			motor[topLeft] = -fullPower;
+		}
 			break;
 		case DOWN:
-			motor[botRight] = fullPower * power;
-			motor[botLeft] =  fullPower * power;
-			motor[midRight] =  fullPower * power;
-			motor[midLeft] =  fullPower * power;
-			motor[topRight] =  fullPower * power;
-			motor[topLeft] =  fullPower * power;
+		while(nMotorEncoder[topLeft] > changeEnc && nMotorEncoder[topRight] > changeEnc){
+			motor[botRight] = fullPower;
+			motor[botLeft] =  fullPower;
+			motor[midRight] =  fullPower;
+			motor[midLeft] =  fullPower;
+			motor[topRight] =  fullPower;
+			motor[topLeft] =  fullPower;
+		}
 			break;
 		}
-	}
+	
+	
+		stopArm();
+		wait1Msec(500);
 }
+
+	
 
 void pidArm(armDir dir, int dist){
 	//2 arm encoders
 	lastTime = time1(T1);
 
-	while(nMotorEncoder[left] >= dist &&nMotorEncoder[right] >= dist){
-		int checkValue = nMotorEncoder[left] - nMotorEncoder[right];
+	while(nMotorEncoder[LEFT] >= dist &&nMotorEncoder[RIGHT] >= dist){
+		int checkValue = nMotorEncoder[LEFT] - nMotorEncoder[RIGHT];
 		switch(dir){
 		case UP:
 			if(checkValue > 0){
-				error = (nMotorEncoder[left] - nMotorEncoder[right])/mEV;
+				error = (nMotorEncoder[LEFT] - nMotorEncoder[RIGHT])/mEV;
 				intrg += error * ((time1(T1) - lastTime) / mI);
 				if(-100 < error && error < 100)
 					intrg = 0;
@@ -93,7 +113,7 @@ void pidArm(armDir dir, int dist){
 				armRight(1, dir);
 				armLeft(1-power, dir);
 				}else if(checkValue < 0){
-				error = (nMotorEncoder[right] - nMotorEncoder[left])/mEV;
+				error = (nMotorEncoder[RIGHT] - nMotorEncoder[LEFT])/mEV;
 				intrg += error * ((time1(T1) - lastTime) / mI);
 				if(-100 < error && error < 100)
 					intrg = 0;
@@ -103,14 +123,14 @@ void pidArm(armDir dir, int dist){
 				armLeft(1, dir);
 				armRight(1-power, dir);
 				}else {
-				arm(1,dir,1);
+				arm(dir,1);
 			}
 			lastTime = time1(T1);
 			break;
 		case DOWN:
 			checkValue *= -1;
 			if(checkValue > 0){
-				error = (nMotorEncoder[left] - nMotorEncoder[right])/mEV;
+				error = (nMotorEncoder[LEFT] - nMotorEncoder[RIGHT])/mEV;
 				intrg += error * ((time1(T1) - lastTime) / mI);
 				if(-100 < error && error < 100)
 					intrg = 0;
@@ -120,7 +140,7 @@ void pidArm(armDir dir, int dist){
 				armRight(-1, dir);
 				armLeft(-1-power, dir);
 				}else if(checkValue < 0){
-				error = (nMotorEncoder[right] - nMotorEncoder[left])/mEV;
+				error = (nMotorEncoder[RIGHT] - nMotorEncoder[LEFT])/mEV;
 				intrg += error * ((time1(T1) - lastTime) / mI);
 				if(-100 < error && error < 100)
 					intrg = 0;
@@ -130,7 +150,7 @@ void pidArm(armDir dir, int dist){
 				armLeft(-1, dir);
 				armRight(-1-power, dir);
 				}else {
-				arm(-1,dir,1);
+				arm(dir,1);
 			}
 			lastTime = time1(T1);
 			break;
