@@ -73,25 +73,33 @@ void cube(clawPos pos){
 
 
 void drive(moveDir dir, int encoder){
-	while(abs(nMotorEncoder[backRight]) < encoder && abs(nMotorEncoder[backLeft]) < encoder){
+	
 	switch(dir){
 	case FORWARDS:
+		while(nMotorEncoder[backRight] < encoder && nMotorEncoder[backLeft] < encoder){
 		motor[frontRight] = fullPower;
 		motor[backRight] = fullPower;
 		motor[backLeft] = fullPower;
 		motor[frontLeft] = fullPower;
+		}
 		break;
 	case RIGHT:
+		int val = encoder - nMotorEncode[backLeft];
+		while(nMotorEncoder[backRight] > encoder - val*2 && nMotorEncoder[backLeft] < encoder){
 		motor[frontRight] = -fullPower;
-		motor[backRight] = fullPower;
-		motor[backLeft] = -fullPower;
-		motor[frontLeft] = fullPower;
-		break;
-	case BACKWARDS:
-		motor[frontRight] =  fullPower;
-		motor[backRight] = fullPower;
+		motor[backRight] = -fullPower;
 		motor[backLeft] = fullPower;
 		motor[frontLeft] = fullPower;
+		}
+		break;
+	case BACKWARDS:
+		while(nMotorEncoder[backRight] > encoder && nMotorEncoder[backLeft] > encoder){
+		motor[frontRight] =  -fullPower;
+		motor[backRight] = -fullPower;
+		motor[backLeft] = -fullPower;
+		motor[frontLeft] = -fullPower;
+		}
+	
 		break;
 	case LEFT:
 		motor[frontRight] = fullPower;
@@ -148,50 +156,29 @@ void intakeControl(clawPos pos) {
 	}
 }
 
-
-task main(){
-	sideOf colour = BLUE; 												//color of platform;
-
-
-
+void skyrise(sideOf colour){
 	//1000 does 90 degree turn on regular tiled floor
 	encArm(0);
 	arm(UP, 350);
 	rotate(RIGHT, 425);
 	arm(DOWN, 0);
-
-
-
-
-
 	for(int i = 0; i < 6; i++){
 		clawIntake(CLOSED);														//close claw to pickup skyrisea
 		arm(UP, skyHgt*i + skyHgt);										//raise skyrise piece
-		rotate(LEFT,rotVal + 50);                			//rotate towards skyrise 
+		rotate(abs(LEFT - colour),rotVal + 50);                			//rotate towards skyrise 
 		arm(DOWN, nMotorEncoder[topLeft]  - skyHgt);		//moves arm down
 		clawIntake(OPEN);
 		arm(UP, nMotorEncoder[topLeft] + skyHgt);															//moves arm up
-		rotate(RIGHT, rotVal);
+		rotate(abs(RIGHT - colour), rotVal);
 		arm(DOWN, 0);
-		
-		
 		}
+}
 
-/*
-arm(DOWN, 2000);
-stopArm();
-drive(
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
+void cube(sideOf colour){
+	
+	
+}
+task main(){												//color of platform;
+	skyrise(RED);
+	
+}
