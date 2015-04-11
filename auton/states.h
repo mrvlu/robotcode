@@ -18,7 +18,7 @@ enum clawPos {		//intake state
 	OPEN
 };
 enum sideOf{
-	BLUE = 0,
-	RED = 1,
+	RED = 0,
+	BLUE = 1
 }
 #endif
