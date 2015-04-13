@@ -156,29 +156,80 @@ void intakeControl(clawPos pos) {
 	}
 }
 
-void skyrise(sideOf colour){
-	//1000 does 90 degree turn on regular tiled floor
-	encArm(0);
-	arm(UP, 350);
-	rotate(RIGHT, 425);
-	arm(DOWN, 0);
-	for(int i = 0; i < 6; i++){
-		clawIntake(CLOSED);														//close claw to pickup skyrisea
-		arm(UP, skyHgt*i + skyHgt);										//raise skyrise piece
-		rotate(abs(LEFT - colour),rotVal + 50);                			//rotate towards skyrise 
-		arm(DOWN, nMotorEncoder[topLeft]  - skyHgt);		//moves arm down
-		clawIntake(OPEN);
-		arm(UP, nMotorEncoder[topLeft] + skyHgt);															//moves arm up
-		rotate(abs(RIGHT - colour), rotVal);
-		arm(DOWN, 0);
-		}
+void cubeAuto(sideOf colour){
+	switch(colour){
+	case RED:
+		arm(DOWN, 600); //picks up first cube
+		arm(UP, 600); //sets arm in position pick up second cube
+		drive(FORWARDS, 500); //moves forward to pick up second cube
+		arm(DOWN, 600); //needles into second cube
+		arm(UP, 600); //extends arm to pole height
+		drive(FORWARDS, 500); // moves to align with pole
+		rotate(RIGHT, 1000);
+		drive(FORWARDS, 200); // moves toward pole and alligns intake with pole
+		cube(OPEN);
+		break;
+
+	case BLUE:
+		arm(DOWN, 600); //picks up first cube
+		arm(UP, 600); //sets arm in position pick up second cube
+		drive(FORWARDS, 500); //moves forward to pick up second cube
+		arm(DOWN, 600); //needles into second cube
+		arm(UP, 600); //extends arm to pole height
+		drive(FORWARDS, 500); // moves to align with pole
+		rotate(LEFT, 1000);
+		drive(FORWARDS, 200); // moves toward pole and alligns intake with pole
+		cube(OPEN);
+		break;
+	}
+
 }
 
-void cube(sideOf colour){
-	
-	
-}
-task main(){												//color of platform;
-	skyrise(RED);
-	
-}
+void skyriseAuto(sideOf colour){
+	//pre												//1000 does 90 degree turn on regular tiled floor
+	switch(colour){
+	case RED:
+		encArm(0);
+		arm(UP, 350);
+		rotate(RIGHT, 425);
+		arm(DOWN, 0);
+
+		for(int i = 0; i < 6; i++){
+			clawIntake(CLOSED);														//close claw to pickup skyrisea
+			arm(UP, skyHgt*i + skyHgt);										//raise skyrise piece
+			rotate(LEFT,rotVal + 50);                			//rotate towards skyrise
+			arm(DOWN, nMotorEncoder[topLeft]  - skyHgt);		//moves arm down
+			clawIntake(OPEN);
+			arm(UP, nMotorEncoder[topLeft] + skyHgt);															//moves arm up
+			rotate(RIGHT, rotVal);
+			arm(DOWN, 0);
+		}
+		break;
+	case BLUE:
+		encArm(0);
+		arm(UP, 350);
+		rotate(RIGHT, 425);
+		arm(DOWN, 0);
+
+		for(int i = 0; i < 6; i++){
+			clawIntake(CLOSED);														//close claw to pickup skyrisea
+			arm(UP, skyHgt*i + skyHgt);										//raise skyrise piece
+			rotate(LEFT,rotVal + 50);                			//rotate towards skyrise
+			arm(DOWN, nMotorEncoder[topLeft]  - skyHgt);		//moves arm down
+			clawIntake(OPEN);
+			arm(UP, nMotorEncoder[topLeft] + skyHgt);															//moves arm up
+			rotate(RIGHT, rotVal);
+			arm(DOWN, 0);
+		}
+		break;
+		}
+	}
+
+
+
+	task main(){
+		sideOf colour = BLUE; 												//color of platform;
+		//cube or skyrise
+
+
+	}
