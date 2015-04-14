@@ -1,0 +1,29 @@
+#ifndef INTAKECONTROL_H
+#define INTAKECONTROL_H
+
+void clawIntake(clawPos pos){
+	switch(pos){
+	case CLOSED:
+		SensorValue[skyriseClaw] = 0;
+		break;
+	case OPEN:
+		SensorValue[skyriseClaw] = 1;
+		break;
+	}
+}
+
+
+void cube(clawPos pos){
+	switch(pos){
+	case OPEN:
+		SensorValue[cubeIntaKe] = 0;
+		break;
+	case CLOSED:
+		SensorValue[cubeIntaKe] = 1;
+		break;
+	}
+}
+
+
+
+#endif
