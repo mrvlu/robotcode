@@ -4,10 +4,10 @@
 void clawIntake(clawPos pos){
 	switch(pos){
 	case CLOSED:
-		SensorValue[skyriseClaw] = 0;
+		SensorValue[skyriseClaw] = 1;
 		break;
 	case OPEN:
-		SensorValue[skyriseClaw] = 1;
+		SensorValue[skyriseClaw] = 0;
 		break;
 	}
 }
@@ -16,10 +16,10 @@ void clawIntake(clawPos pos){
 void cube(clawPos pos){
 	switch(pos){
 	case OPEN:
-		SensorValue[cubeIntaKe] = 0;
+		SensorValue[cubeIntake] = 0;
 		break;
 	case CLOSED:
-		SensorValue[cubeIntaKe] = 1;
+		SensorValue[cubeIntake] = 1;
 		break;
 	}
 }
