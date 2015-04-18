@@ -1,24 +1,44 @@
 #ifndef STATES_H
 #define STATES_H
 
-enum moveDir {		//sets direction
-	RIGHT = 0,
-	LEFT = 1,
-	FORWARDS = 2,
-	BACKWARDS = 3
+enum clawPos {
+	CLOSED,
+	OPEN
 };
 
-enum armDir {		//direction of arm
+enum dirArmRot{
+	UPFORWARD,
+	UPBACKWARD,
+	UPLEFT,
+	UPRIGHT,
+	DOWNFORWARD,
+	DOWNBACKWARD,
+	DOWNLEFT,
+	DOWNRIGHT
+};
+
+
+enum moveDir{
+	RIGHT,
+	LEFT,
+	BACKWARDS,
+	FORWARDS
+};
+
+enum armDir {
 	UP,
 	DOWN
 };
 
-enum clawPos {		//intake state
-	CLOSED,
-	OPEN
-};
+
 enum sideOf{
-	RED = 0,
-	BLUE = 1
-}
+	BLUE,
+	RED
+};
+
+enum rotDir{
+	RIGHTTURN,
+	LEFTTURN
+};
+
 #endif
